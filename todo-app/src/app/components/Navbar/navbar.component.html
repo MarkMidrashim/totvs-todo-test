@@ -1,0 +1,17 @@
+<aside class="side-navbar active-nav d-flex justify-content-between flex-wrap flex-column" id="sidebar">
+    <ul class="nav flex-column text-white w-100">
+        <span class="nav-link h3 my-2">
+            <fa-icon [icon]="listIcon"></fa-icon>
+            To Do
+        </span>
+        <ng-container *ngFor="let list of lists">
+            <li (click)="showTasks(list.id)" class="nav-link click">
+                <span class="mx-2">{{ list.title }}</span>
+            </li>
+        </ng-container>
+        <button type="button" class="btn btn-primary item-end">
+            Nova Lista&nbsp;
+            <fa-icon [icon]="plusIcon"></fa-icon>
+        </button>
+    </ul>
+</aside>
