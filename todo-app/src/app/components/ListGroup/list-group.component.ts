@@ -176,16 +176,18 @@ export class ListGroupComponent implements OnInit {
         modal.componentInstance.nameValue   = task.title;
 
         modal.result.then(async (response) => {
-            let taskToUpdate = new Task({
-                id: task.id,
-                listId: this._listId,
-                title: response.name,
-                complete: false
-            });
-            const result = await this.taskDataService.updateTask(taskToUpdate);
+            if (typeof response !== 'undefined') {
+                let taskToUpdate = new Task({
+                    id: task.id,
+                    listId: this._listId,
+                    title: response.name,
+                    complete: false
+                });
+                const result = await this.taskDataService.updateTask(taskToUpdate);
 
-            if (result) {
-                this.tasks[index] = result;
+                if (result) {
+                    this.tasks[index] = result;
+                }
             }
         }).catch((err) => {
             this.errors.push(new Error({
