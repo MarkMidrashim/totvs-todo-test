@@ -83,13 +83,15 @@ export class ListGroupComponent implements OnInit {
         modal.componentInstance.submit  = 'Criar';
 
         modal.result.then(async (response) => {
-            let task = new Task({
-                listId: this._listId,
-                title: response.name,
-                complete: false
-            });
-            let result = await this.taskDataService.addTask(task);
-            this.tasks.push(result);
+            if (typeof response !== 'undefined') {
+                let task = new Task({
+                    listId: this._listId,
+                    title: response.name,
+                    complete: false
+                });
+                let result = await this.taskDataService.addTask(task);
+                this.tasks.push(result);
+            }
         }).catch((err) => {
             this.errors.push(new Error({
                 title: "Não foi possível adicionar uma tarefa",
