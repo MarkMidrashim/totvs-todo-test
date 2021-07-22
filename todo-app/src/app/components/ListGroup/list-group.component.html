@@ -2,8 +2,35 @@
     <p style="font-size: 20px; color: white">Loading...</p>
 </ngx-spinner>
 
-<div class="list-group">
-    <a href="#" class="list-group-item list-group-item-action list-group-item-light" *ngFor="let task of tasks">
-        {{ task.title }}
-    </a>
+<div class="container-fluid">
+    <h2>{{ _list?.title }}</h2>
+    <div class="row">
+        <div *ngIf="errors.length >= 1" class="alert alert-danger" role="alert">
+            <span *ngFor="let error of errors">{{ error.message }}</span>
+        </div>
+        <ul class="list-group col-9">
+            <ng-container *ngFor="let task of tasks; let i = index">
+                <li class="list-group-item list-group-item-action list-group-item-light" [ngClass]="{'list-group-item-success': task.complete === true}">
+                    <div class="form-check float-start">
+                        <input class="form-check-input" *ngIf="!task.complete" #checkboxes type="checkbox" value="" (click)="completeTask(task, i)">
+                        <label class="form-check-label" for="flexCheckDefault" [ngClass]="{'text-striped': task.complete === true}">
+                            {{ task.title }}
+                        </label>
+                    </div>
+                    <div class="float-end" *ngIf="!task.complete">
+                        <button class="btn btn-primary remove-item ms-2" (click)="editTask(task, i)">
+                            <fa-icon [icon]="['fas', 'pencil-alt']"></fa-icon>
+                        </button>
+                        <button class="btn btn-danger remove-item ms-2" (click)="removeTask(task, i)">
+                            <fa-icon [icon]="['fas', 'trash']"></fa-icon>
+                        </button>
+                    </div>
+                </li>
+            </ng-container>
+        </ul>
+    </div>
 </div>
+
+<a (click)="addNewTask()" *ngIf="_listId" href="#" class="float">
+    <fa-icon [icon]="['fas', 'plus']" stackItemSize="2x"></fa-icon>
+</a>

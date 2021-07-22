@@ -1,5 +1,17 @@
-
-<app-navbar #navbar></app-navbar>
-<app-list-group #listGroup></app-list-group>
-
-<router-outlet></router-outlet>
+<div class="container-fluid overflow-hidden">
+    <div class="row vh-100 overflow-auto">
+        <div class="col-12 col-sm-3 col-xl-2 px-sm-2 px-0 bg-dark d-flex sticky-top">
+            <app-navbar [title]="title"></app-navbar>
+        </div>
+        <div class="col d-flex flex-column h-sm-100">
+            <main class="row overflow-auto">
+                <div class="col pt-4">
+                    <app-list-group></app-list-group>
+                </div>
+            </main>
+            <div class="row bg-light py-4 mt-auto">
+                <app-footer></app-footer>
+            </div>
+        </div>
+    </div>
+</div>

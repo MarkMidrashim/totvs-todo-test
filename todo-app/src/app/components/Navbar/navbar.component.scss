@@ -1,45 +1,19 @@
-.side-navbar {
-    width: 18em;
-    height: 100em;
-    position: fixed;
-    margin-left: -300px;
-    background-color: #F2F2F2;
-    transition: 0.5s;
+/* this is needed to make the content scrollable on larger screens */
+@media (min-width: 576px) {
+    .h-sm-100 {
+        height: 100%;
+    }
 }
 
-.item-end {
-    position: fixed;
+.list-items {
+    max-height: 45em !important;
+    overflow-y: auto;
+    width: 18em;
+}
+
+.sidebar-bottom {
+    position: absolute;
     display: inline-block;
     bottom: 0;
-}
-
-.click {
-    cursor: pointer;
-}
-
-.nav-link:active,
-.nav-link:focus,
-.nav-link:hover {
-    background-color: #ffffff26;
-}
-
-.my-container {
-    transition: 0.4s;
-}
-
-.active-nav {
-    margin-left: 0;
-}
-
-/**
- * For main section
- */
-.active-cont {
-    margin-left: 180px;
-}
-
-#menu-btn {
-    background-color: #100901;
-    color: #fff;
-    margin-left: -62px;
+    left: 15px;
 }

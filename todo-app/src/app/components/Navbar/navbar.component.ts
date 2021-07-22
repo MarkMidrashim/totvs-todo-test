@@ -1,8 +1,10 @@
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from './../../services/message.service';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { faList, faPlus } from '@fortawesome/free-solid-svg-icons'
-import { ListDataService } from './../../services/list-data.service';
+import { ListDataService } from '../../services/api/list-data.service';
 import { List } from 'src/app/models/list';
+import { Error } from 'src/app/models/error';
+import { ModalComponent } from '../Modal/modal.component';
 
 @Component({
     selector: 'app-navbar',
@@ -11,23 +13,25 @@ import { List } from 'src/app/models/list';
 })
 export class NavbarComponent implements OnInit {
 
-    public listIcon = faList;
-    public plusIcon = faPlus;
-
+    @Input() title?: string = 'ToDo';
+    private _modalId: number = 0;
     public lists: List[] = [];
+    public errors: Error[] = [];
 
     /**
      * CONSTRUCTOR
-     * @param listDataService
+     * @param listDataService: ListDataService
+     * @param messageService: MessageService
+     * @param modalService: NgbModal
      */
     constructor(
         private listDataService: ListDataService,
-        private messageService: MessageService
+        private messageService: MessageService,
+        public modalService: NgbModal
     ) { }
 
     async ngOnInit() {
-        await this.listDataService.getAllLists()
-            .then(response => this.lists = response);
+        await this.listDataService.getAllLists().then(response => this.lists = response);
     }
 
     /**
@@ -36,5 +40,26 @@ export class NavbarComponent implements OnInit {
      */
     async showTasks(id: number): Promise<void> {
         this.messageService.setNotify(id);
+    }
+
+    /**
+     * Método responsável por adicionar uma lista
+     */
+    async addNewList() {
+        const modal = this.modalService.open(ModalComponent);
+        modal.componentInstance.id      = this._modalId++;
+        modal.componentInstance.title   = 'Criar Lista';
+        modal.componentInstance.submit  = 'Criar';
+
+        modal.result.then(async (response) => {
+            let list = new List({title: response.name});
+            let result = await this.listDataService.addList(list);
+            this.lists.push(result);
+        }).catch((err) => {
+            this.errors.push(new Error({
+                title: "Não foi possível criar a lista",
+                message: err.message
+            }));
+        });
     }
 }
