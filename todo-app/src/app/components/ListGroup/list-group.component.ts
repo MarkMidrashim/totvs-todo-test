@@ -157,7 +157,7 @@ export class ListGroupComponent implements OnInit {
                     )
                 }
             } else {
-                let element = this.checkboxes.get(task.id - 1) as ElementRef;
+                let element = this.checkboxes.get(index) as ElementRef;
                 element.nativeElement.checked = false;
             }
         });
