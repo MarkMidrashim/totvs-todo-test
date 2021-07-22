@@ -61,6 +61,8 @@ export class ListGroupComponent implements OnInit {
                         title: "Não há nenhum dado",
                         message: "Não há nenhum dado"
                     }));
+                } else {
+                    this.errors = [];
                 }
             }
             this.spinner.hide();
