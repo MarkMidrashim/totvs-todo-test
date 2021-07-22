@@ -124,11 +124,6 @@ export class ListGroupComponent implements OnInit {
                         'A tarefa foi removida com sucesso.',
                         'success'
                     )
-                } else {
-                    this.errors.push(new Error({
-                        title: "Não foi possível remover a tarefa",
-                        message: "Não foi possível remover a tarefa"
-                    }));
                 }
             }
         });
@@ -160,11 +155,6 @@ export class ListGroupComponent implements OnInit {
                         'A tarefa foi concluida com sucesso.',
                         'success'
                     )
-                } else {
-                    this.errors.push(new Error({
-                        title: "Não foi possível completar a tarefa",
-                        message: "Não foi possível completar a tarefa"
-                    }));
                 }
             } else {
                 let element = this.checkboxes.get(task.id - 1) as ElementRef;
@@ -196,11 +186,6 @@ export class ListGroupComponent implements OnInit {
 
             if (result) {
                 this.tasks[index] = result;
-            } else {
-                this.errors.push(new Error({
-                    title: "Não foi possível editar a tarefa",
-                    message: "Não foi possível editar a tarefa"
-                }));
             }
         }).catch((err) => {
             this.errors.push(new Error({
